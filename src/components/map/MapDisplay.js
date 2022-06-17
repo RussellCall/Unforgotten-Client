@@ -53,7 +53,7 @@ export const MapDisplay = () => {
             initialViewState={{
                 latitude: 36.1627,
                 longitude: -86.7816,
-                zoom: 8.5,
+                zoom: 10,
                 bearing: 0,
                 pitch: 0
             }}
