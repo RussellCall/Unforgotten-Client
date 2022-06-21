@@ -55,22 +55,14 @@ export const MarkerDetails = () => {
                         <div className="marker_detail_year">Marker Erected On: {m.year_erected}</div>
                         <div className="marker_name">{m.marker_name}</div>
                         <div className="marker_text">Marker Text: {m.marker_text}</div>
+                        <div className="comments_body">
+                        <div className="commentBody">{comments.map(
+                                (comment) => {
+                                    return <div>Comments: {comment.text}</div>
+                                }
+                            )}</div>
+                        </div>
                     </section>
             })}
         </article>)
 }
-
-//TODO Add tags to the marker details page.
-        {/* <div>{markers.tags.map(({label}, index) => {
-            return <li key={index}>
-            <div className="tag_options">
-                <input
-                type="checkbox"
-                id={`custom-checkbox-${index}`}
-                label={label}
-                value={label}
-                />
-                <label htmlFor={`custom-checkbox-${index}`}>{label}</label>
-            </div>
-        </li>
-        })}</div> */}

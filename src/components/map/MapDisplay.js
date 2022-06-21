@@ -76,7 +76,7 @@ export const MapDisplay = () => {
                 onClose={() => setPopupInfo(null)}
             >
             <div>
-                {popupInfo.marker_name}|{' '}
+                {popupInfo.marker_name}:{' '}
 
                     <button
                         key={`marker-${popupInfo.id}`}

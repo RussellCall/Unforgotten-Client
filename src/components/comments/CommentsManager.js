@@ -16,6 +16,16 @@ export const getCurrentComments = (id) => {
     .then(res => res.json())
 }
 
+
+export const getMarkerComment = (markerId) => {
+    return fetch(`http://localhost:8000/comments/${markerId}/comments_by_marker`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+    })
+    .then(res => res.json())
+}
+
 export const createComment = (comment) => {
     return fetch("http://localhost:8000/comments", {
         method: "POST",

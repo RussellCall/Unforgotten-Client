@@ -27,3 +27,12 @@ export const createImage = (img) => {
     })
         .then(getImages)
 }
+
+export const getMarkerImage = (markerId) => {
+    return fetch(`http://localhost:8000/images/${markerId}/images_by_marker`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        }
+    })
+    .then(res => res.json())
+}

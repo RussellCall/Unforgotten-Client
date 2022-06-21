@@ -20,13 +20,9 @@ export const CommentList = (props) => {
 
     return (
         <><article className="comments">
-                <button className="btn btn-2 btn-sep icon-create"
-                    onClick={() => {
-                        history.push({ pathname: "/new"})
-                    }}>Leave A Comment</button>
             {comments.map(comment => {
                 return <section key={`comment--${comment.id}`} className="comment">
-                    <div className="comment__text">{comment.marker_id.marker_name} Comments:</div>
+                    <div className="comment__text">{comment.marker_id} Comments:</div>
                     <div className="comment__text">{comment.text}</div>
                 </section>;
             })}
