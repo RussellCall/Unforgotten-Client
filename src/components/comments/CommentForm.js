@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useHistory } from 'react-router-dom'
-import { getMarkers } from "./markers/MarkerManager"
+import { getMarkers } from "../markers/MarkerManager"
 import { createComment } from "./CommentsManager"
 
 
@@ -32,7 +32,7 @@ export const CommentForm = () => {
     const changeCommentState = (event) => {
         event.preventDefault()
         const NewComment = {...comment}
-        NewComment[evt.target.name] = evt.target.value
+        NewComment[event.target.name] = event.target.value
         setCurrentComment(NewComment)
         
     }

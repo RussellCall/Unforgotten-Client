@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom"
@@ -19,12 +20,6 @@ export const ImageList = (props) => {
         loadImage()
     }, [])
 
-    // useEffect(
-    //     () => {
-    //         getCurrentGame(parseInt(gameId)).then((gameData) => {
-    //             editGame(gameData)
-    //         })
-    //     }, [])
 
     return (
         <><article className="images">
@@ -33,10 +28,10 @@ export const ImageList = (props) => {
                         history.push({ pathname: "/new"})
                     }}>Upload Image</button>
             {images.map(image => {
-                return <section key={`image--${image.id}`} className="image">
-                    <div className="image_url">{image.image}</div>
+                return <div key={`image--${image.id}`} className="image">
+                    <img className="image_url" src={image.image} alt={image.image}/>
                     <div className="image_link"><Link to={`/images/${image.id}`}>{image.image}</Link></div>
-                </section>;
+                </div>;
             })}
         </article></>
         

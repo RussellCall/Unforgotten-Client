@@ -15,3 +15,15 @@ export const getCurrentImage = (id) => {
     })
     .then(res => res.json())
 }
+
+export const createImage = (img) => {
+    return fetch("http://localhost:8000/images", {
+        method: "POST",
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(img)
+    })
+        .then(getImages)
+}

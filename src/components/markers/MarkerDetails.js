@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
-import { getMarkers } from "./MarkerManager.js"
+import { useHistory, useParams } from "react-router-dom"
+import { getComments } from "../comments/CommentsManager.js"
+import { getMarkers, getCurrentMarker } from "./MarkerManager.js"
+
 
 export const MarkerDetails = () => {
     const [ markers, setDetails ] = useState([])
+    const [comments, setComments] = useState([])
+    const {markerId} = useParams()
+    const {commentId} = useParams()
     const history = useHistory()
     
 
@@ -16,8 +21,27 @@ export const MarkerDetails = () => {
             )
     }
 
+    const currentMarkerState = () => {
+        getCurrentMarker(parseInt(markerId))
+            .then(
+                (data) => {
+                    setDetails(data)
+                }
+            )
+    }
+
     useEffect(() => {
         markerState()
+    }, [])
+
+
+    useEffect(() => {
+        currentMarkerState()
+    }, [])
+
+    useEffect(
+        () => {
+        getComments().then((comment)=> setComments(comment))
     }, [])
 
     return (
@@ -35,3 +59,18 @@ export const MarkerDetails = () => {
             })}
         </article>)
 }
+
+//TODO Add tags to the marker details page.
+        {/* <div>{markers.tags.map(({label}, index) => {
+            return <li key={index}>
+            <div className="tag_options">
+                <input
+                type="checkbox"
+                id={`custom-checkbox-${index}`}
+                label={label}
+                value={label}
+                />
+                <label htmlFor={`custom-checkbox-${index}`}>{label}</label>
+            </div>
+        </li>
+        })}</div> */}

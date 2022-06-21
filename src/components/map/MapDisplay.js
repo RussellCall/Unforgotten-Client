@@ -9,17 +9,18 @@ import Map, {
   ScaleControl,
   GeolocateControl
 } from 'react-map-gl';
+import {useHistory} from 'react-router-dom';
 import { getMarkers } from '../markers/MarkerManager';
 import ControlPanel from './control-panel';
 import Pin from './pin';
-
-//import CITIES from '../../.data/cities.json';
 
 const TOKEN = 'pk.eyJ1IjoicnVzc2NhbGwiLCJhIjoiY2w0OHVpN2Z0MHczczNlbnNodHdxbGZ3NCJ9.FPCMQsW7K_C89mfzaxJH3Q'; // Set your mapbox token here
 
 export const MapDisplay = () => {
     const [markerLoc, setMarkers] = useState([])
     const [popupInfo, setPopupInfo] = useState(null);
+    const history = useHistory();
+
 
     useEffect(
         () => {
@@ -53,7 +54,7 @@ export const MapDisplay = () => {
             initialViewState={{
                 latitude: 36.1627,
                 longitude: -86.7816,
-                zoom: 10,
+                zoom: 11.5,
                 bearing: 0,
                 pitch: 0
             }}
@@ -75,13 +76,15 @@ export const MapDisplay = () => {
                 onClose={() => setPopupInfo(null)}
             >
             <div>
-                {popupInfo.marker_name}, {popupInfo.marker_text} |{' '}
-            <a
-                target="_new"
-                href={`http://en.wikipedia.org/w/index.php?title=Special:Search&search=${popupInfo.city}, ${popupInfo.state}`}
-              >
-                Wikipedia
-              </a>
+                {popupInfo.marker_name}|{' '}
+
+                    <button
+                        key={`marker-${popupInfo.id}`}
+                        onClick={() => 
+                      history.push(`/markers/${popupInfo.id}`)}
+                    >
+                      Marker Details
+                  </button>
             </div>
             <img width="100%" src={popupInfo.image} />
           </Popup>

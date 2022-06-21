@@ -18,13 +18,6 @@ export const CommentList = (props) => {
         loadComment()
     }, [])
 
-    // useEffect(
-    //     () => {
-    //         getCurrentGame(parseInt(gameId)).then((gameData) => {
-    //             editGame(gameData)
-    //         })
-    //     }, [])
-
     return (
         <><article className="comments">
                 <button className="btn btn-2 btn-sep icon-create"
@@ -33,8 +26,8 @@ export const CommentList = (props) => {
                     }}>Leave A Comment</button>
             {comments.map(comment => {
                 return <section key={`comment--${comment.id}`} className="comment">
-                    <div className="comment__text">{comment.marker.marker_name} Comments:</div>
-                    <div className="comment__text"><Link to={`/comments/${comment.id}`}>{comment.text}</Link></div>
+                    <div className="comment__text">{comment.marker_id.marker_name} Comments:</div>
+                    <div className="comment__text">{comment.text}</div>
                 </section>;
             })}
         </article></>
