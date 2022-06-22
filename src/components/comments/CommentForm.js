@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useHistory } from 'react-router-dom'
-import { getMarkers } from "./markers/MarkerManager"
+import { getMarkers } from "../markers/MarkerManager"
 import { createComment } from "./CommentsManager"
 
 
@@ -10,11 +10,6 @@ export const CommentForm = () => {
     const {markerId} = useParams()
     const [comment, setMarker] = useState([])
 
-    /*
-    TODO - Add a useEffect to get the marker data from the database when the component mounts.
-    TODO - Add a useEffect to get the marker data from the database when the markerId changes.
-    TODO - Make Form Data populate and post per individual marker.
-    */
     const [currentComment, setCurrentComment] = useState({
         text: "",
         marker_id: 0,
@@ -32,7 +27,7 @@ export const CommentForm = () => {
     const changeCommentState = (event) => {
         event.preventDefault()
         const NewComment = {...comment}
-        NewComment[evt.target.name] = evt.target.value
+        NewComment[event.target.name] = event.target.value
         setCurrentComment(NewComment)
         
     }
@@ -57,7 +52,7 @@ export const CommentForm = () => {
                     const comment = {
                         marker_id: markerId,
                         text: currentComment.text,
-                        user_id: localStorage.getItem("lu_token")
+                        user_id: localStorage.getItem("auth_token")
                     }
 
                     // Send POST request to your API

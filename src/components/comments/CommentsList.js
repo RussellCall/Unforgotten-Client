@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom"
-import { getComments, getCurrentComment } from "./CommentsManager";
+import { deleteComment, getComments } from "./CommentsManager";
 
 export const CommentList = (props) => {
     const [ comments, setComment ] = useState([])
@@ -18,23 +16,16 @@ export const CommentList = (props) => {
         loadComment()
     }, [])
 
-    // useEffect(
-    //     () => {
-    //         getCurrentGame(parseInt(gameId)).then((gameData) => {
-    //             editGame(gameData)
-    //         })
-    //     }, [])
-
     return (
         <><article className="comments">
-                <button className="btn btn-2 btn-sep icon-create"
-                    onClick={() => {
-                        history.push({ pathname: "/new"})
-                    }}>Leave A Comment</button>
             {comments.map(comment => {
                 return <section key={`comment--${comment.id}`} className="comment">
-                    <div className="comment__text">{comment.marker.marker_name} Comments:</div>
-                    <div className="comment__text"><Link to={`/comments/${comment.id}`}>{comment.text}</Link></div>
+                    <div className="comment__text">{comment.marker_id} Comments:</div>
+                        <button onClick={() => {
+                        deleteComment(comment.id)
+                        history.push("/comments")
+                        } }>Delete</button>
+                    <div className="comment__text">{comment.text}</div>
                 </section>;
             })}
         </article></>

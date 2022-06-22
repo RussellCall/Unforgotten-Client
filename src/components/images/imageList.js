@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom"
-import { getImages } from "./imageManger";
+import { deleteImage, getImages } from "./imageManger";
 
 
 export const ImageList = (props) => {
     const [ images, setImage ] = useState([])
     const history = useHistory()
-//TODO - get the images from the database, and display them in a list as a Image.
     const loadImage = () => {
         getImages()
             .then(
@@ -19,12 +17,6 @@ export const ImageList = (props) => {
         loadImage()
     }, [])
 
-    // useEffect(
-    //     () => {
-    //         getCurrentGame(parseInt(gameId)).then((gameData) => {
-    //             editGame(gameData)
-    //         })
-    //     }, [])
 
     return (
         <><article className="images">
@@ -33,10 +25,14 @@ export const ImageList = (props) => {
                         history.push({ pathname: "/new"})
                     }}>Upload Image</button>
             {images.map(image => {
-                return <section key={`image--${image.id}`} className="image">
-                    <div className="image_url">{image.image}</div>
+                return <div key={`image--${image.id}`} className="image">
+                    <img className="image_url" src={image.image} alt={image.image}/>
+                        <button onClick={() => {
+                        deleteImage(image.id)
+                        history.push("/image")
+                        } }>Delete</button>
                     <div className="image_link"><Link to={`/images/${image.id}`}>{image.image}</Link></div>
-                </section>;
+                </div>;
             })}
         </article></>
         
