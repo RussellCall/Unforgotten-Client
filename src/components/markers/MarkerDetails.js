@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useHistory, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { getComments } from "../comments/CommentsManager.js"
 import { getMarkers, getCurrentMarker } from "./MarkerManager.js"
 
@@ -8,8 +8,6 @@ export const MarkerDetails = () => {
     const [ markers, setDetails ] = useState([])
     const [comments, setComments] = useState([])
     const {markerId} = useParams()
-    const {commentId} = useParams()
-    const history = useHistory()
     
 
     const markerState = () => {

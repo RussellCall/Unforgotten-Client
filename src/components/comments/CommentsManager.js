@@ -37,3 +37,13 @@ export const createComment = (comment) => {
     })
         .then(getComments)
 }
+
+export const deleteComment = (commentId) => {
+    return fetch(`http://localhost:8000/comments/${commentId}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        },
+    })
+    .then(getComments)
+  };

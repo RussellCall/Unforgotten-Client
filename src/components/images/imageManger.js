@@ -7,8 +7,8 @@ export const getImages = () => {
         .then(response => response.json())
 }
 
-export const getCurrentImage = (id) => {
-    return fetch(`http://localhost:8000/images/${id}`, {
+export const getCurrentImage = (imgId) => {
+    return fetch(`http://localhost:8000/images/${imgId}`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("lu_token")}`
         }
@@ -36,3 +36,13 @@ export const getMarkerImage = (markerId) => {
     })
     .then(res => res.json())
 }
+
+export const deleteImage = (imgId) => {
+    return fetch(`http://localhost:8000/images/${imgId}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("lu_token")}`
+        },
+    })
+    .then(getImages)
+  };

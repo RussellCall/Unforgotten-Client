@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useState, useEffect, useMemo} from 'react';
-import {render} from 'react-dom';
 import Map, {
   Marker,
   Popup,
@@ -11,8 +10,11 @@ import Map, {
 } from 'react-map-gl';
 import {useHistory} from 'react-router-dom';
 import { getMarkers } from '../markers/MarkerManager';
-import ControlPanel from './control-panel';
 import Pin from './pin';
+import "mapbox-gl/dist/mapbox-gl.css";
+import { _CameraLight as CameraLight, LightingEffect } from "@deck.gl/core";
+import { withStyles } from "@material-ui/styles";
+import MapControlsContainer from "./MapControlsContainer";
 
 const TOKEN = 'pk.eyJ1IjoicnVzc2NhbGwiLCJhIjoiY2w0OHVpN2Z0MHczczNlbnNodHdxbGZ3NCJ9.FPCMQsW7K_C89mfzaxJH3Q'; // Set your mapbox token here
 
@@ -58,7 +60,7 @@ export const MapDisplay = () => {
                 bearing: 0,
                 pitch: 0
             }}
-            mapStyle="mapbox://styles/mapbox/streets-v11"
+            mapStyle='mapbox://styles/mapbox/light-v9'
             mapboxAccessToken={TOKEN}
         >
         <GeolocateControl position="top-left" />
@@ -91,7 +93,7 @@ export const MapDisplay = () => {
         )}
       </Map>
 
-      <ControlPanel />
+      <MapControlsContainer />
     </div>
   );
 }

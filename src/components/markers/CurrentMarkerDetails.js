@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react"
 import { Link, useHistory, useParams } from "react-router-dom"
 import { getTags, removeTag } from "../comments/tags/TagManager.js"
 import { getCurrentMarker, updateTag } from "./MarkerManager.js"
-import { getMarkerComment } from "../comments/CommentsManager.js"
-import { getMarkerImage } from "../images/imageManger.js"
-
+import { deleteComment, getMarkerComment } from "../comments/CommentsManager.js"
+import { deleteImage, getMarkerImage } from "../images/imageManger.js"
 
 export const CurrentMarkerDetails = () => {
     const [ marker, setDetails ] = useState({})
@@ -13,7 +12,6 @@ export const CurrentMarkerDetails = () => {
     const {tagId} = useParams()
     const [comments, setComments] = useState([])
     const [images, setImages] = useState([])
-    const {imageId} = useParams()
     const history = useHistory()
 
     const currentMarkerState = () => {
@@ -25,12 +23,6 @@ export const CurrentMarkerDetails = () => {
             )
     }
 
-    const editMarkerState = (event) => {
-        const EditedMarker = Object.assign({}, marker)
-        EditedMarker[event.target.name] = event.target.value
-        setDetails(EditedMarker)
-    }
-
     const tagState = () => {
         getTags(parseInt(tagId))
             .then(
@@ -40,11 +32,9 @@ export const CurrentMarkerDetails = () => {
             )
     }
 
-
     useEffect(() => {
         tagState()
     }, [])
-
 
     useEffect(() => {
         currentMarkerState()
@@ -78,13 +68,21 @@ export const CurrentMarkerDetails = () => {
                         <div className="comments_body">
                         <div className="commentBody">{comments.map(
                                 (comment) => {
-                                    return <div>Comments: {comment.text}</div>
+                                    return <><div>Comments: {comment.text}</div>
+                                                <button onClick={() => {
+                                                deleteComment(comment.id)
+                                                history.push("/comments")
+                                                } }>Delete</button></>
                                 }
                             )}</div>
                         <div className="images"> Pictures:
                             {images.map(image => {
                                             return <div key={`image--${image.id}`} className="image">
                                                 <img className="image_url" src={image.image} alt={image.image}/>
+                                                <button onClick={() => {
+                                                deleteImage(image.id)
+                                                history.push("/images")
+                                                } }>Delete</button>
                                                 <div className="image_link"><Link to={`/images/${image.id}`}>{image.image}</Link></div>
                                             </div>;
                                         })}
