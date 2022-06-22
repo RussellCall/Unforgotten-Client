@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom"
 import { useHistory } from 'react-router-dom'
 import { getMarkers } from "../markers/MarkerManager.js"
 import { createImage } from "./imageManger.js"
-//import { getImages } from "./imageManger.js"
 
 export const ImageForm = () => {
     const history = useHistory()
@@ -53,7 +52,7 @@ export const ImageForm = () => {
                     const image = {
                         marker_id: markerId,
                         image: currentImage.text,
-                        user_id: localStorage.getItem("lu_token")
+                        user_id: localStorage.getItem("auth_token")
                     }
 
                     // Send POST request to your API

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { deleteComment, getComments, getCurrentComment } from "./CommentsManager";
+import { deleteComment, getComments } from "./CommentsManager";
 
 export const CommentList = (props) => {
     const [ comments, setComment ] = useState([])

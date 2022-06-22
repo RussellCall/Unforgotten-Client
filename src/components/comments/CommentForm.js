@@ -10,11 +10,6 @@ export const CommentForm = () => {
     const {markerId} = useParams()
     const [comment, setMarker] = useState([])
 
-    /*
-    TODO - Add a useEffect to get the marker data from the database when the component mounts.
-    TODO - Add a useEffect to get the marker data from the database when the markerId changes.
-    TODO - Make Form Data populate and post per individual marker.
-    */
     const [currentComment, setCurrentComment] = useState({
         text: "",
         marker_id: 0,
@@ -57,7 +52,7 @@ export const CommentForm = () => {
                     const comment = {
                         marker_id: markerId,
                         text: currentComment.text,
-                        user_id: localStorage.getItem("lu_token")
+                        user_id: localStorage.getItem("auth_token")
                     }
 
                     // Send POST request to your API

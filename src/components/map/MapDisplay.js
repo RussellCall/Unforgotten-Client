@@ -15,6 +15,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { _CameraLight as CameraLight, LightingEffect } from "@deck.gl/core";
 import { withStyles } from "@material-ui/styles";
 import MapControlsContainer from "./MapControlsContainer";
+import { Button } from '@mui/material'
 
 const TOKEN = 'pk.eyJ1IjoicnVzc2NhbGwiLCJhIjoiY2w0OHVpN2Z0MHczczNlbnNodHdxbGZ3NCJ9.FPCMQsW7K_C89mfzaxJH3Q'; // Set your mapbox token here
 
@@ -80,13 +81,14 @@ export const MapDisplay = () => {
             <div>
                 {popupInfo.marker_name}:{' '}
 
-                    <button
+                    <Button
+                        variant="text"
                         key={`marker-${popupInfo.id}`}
                         onClick={() => 
                       history.push(`/markers/${popupInfo.id}`)}
                     >
                       Marker Details
-                  </button>
+                  </Button>
             </div>
             <img width="100%" src={popupInfo.image} />
           </Popup>
