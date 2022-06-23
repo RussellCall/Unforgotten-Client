@@ -25,7 +25,7 @@ export const createImage = (img) => {
         },
         body: JSON.stringify(img)
     })
-        .then(getImages)
+        .then(window.location.reload())
 }
 
 export const getMarkerImage = (markerId) => {
@@ -44,5 +44,5 @@ export const deleteImage = (imgId) => {
             "Authorization": `Token ${localStorage.getItem("auth_token")}`
         },
     })
-    .then(getImages)
+    .then(window.location.reload())
   };

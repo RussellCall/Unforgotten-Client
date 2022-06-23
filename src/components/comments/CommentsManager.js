@@ -34,7 +34,7 @@ export const createComment = (comment) => {
         },
         body: JSON.stringify(comment)
     })
-        .then(getComments)
+        .then(window.location.reload())
 }
 
 export const deleteComment = (commentId) => {
@@ -44,5 +44,5 @@ export const deleteComment = (commentId) => {
             "Authorization": `Token ${localStorage.getItem("auth_token")}`
         },
     })
-    .then(getComments)
+    .then(window.location.reload())
   };

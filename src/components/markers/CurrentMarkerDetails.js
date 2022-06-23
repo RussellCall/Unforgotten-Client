@@ -17,6 +17,9 @@ export const CurrentMarkerDetails = () => {
     const [comments, setComments] = useState([])
     const [images, setImages] = useState([])
     const history = useHistory()
+    const [toggle, setToggle] = useState(false)
+    const [tagToggle, setTagToggle] = useState(false)
+
 
     const currentMarkerState = () => {
         getCurrentMarker(parseInt(markerId))
@@ -39,7 +42,7 @@ export const CurrentMarkerDetails = () => {
 
     useEffect(() => {
         tagState()
-    }, [])
+    }, [toggle])
 
     useEffect(
         () => {
@@ -47,7 +50,7 @@ export const CurrentMarkerDetails = () => {
                 .then((data) => {
                     setMarkerTags(data)  // ... makes a copy of state
                 })
-        }, [marker]
+        }, [marker, tagToggle]
     )
 
     useEffect(() => {
@@ -63,6 +66,7 @@ export const CurrentMarkerDetails = () => {
         () => {
             getMarkerImage(markerId).then((img)=> setImages(img))
     }, [markerId])
+
 
     return (
         <article className="details">
@@ -82,12 +86,12 @@ export const CurrentMarkerDetails = () => {
                         <div className="comments_body">
                         <div className="commentBody">{comments.map(
                                 (comment) => {
-                                    return <><div>Comments: {comment.text}</div>
-                                                <IconButton className="comment_delete" aria-label="delete"> 
+                                    return <><div>Comments:</div>
+                                                <IconButton className="comment_delete" aria-label="delete" size="small" color="primary">       
                                                 <Delete onClick={() => {
                                                 deleteComment(comment.id)
                                                 history.push("/comments")
-                                                }} /></IconButton></>
+                                                }} />{comment.text}</IconButton></>
                                 }
                             )}</div>
                         <div className="images"> Pictures:
@@ -109,8 +113,9 @@ export const CurrentMarkerDetails = () => {
                             return <><div className="marker_tag">Tags: {mt.tag?.label}</div>
                             <Button className="remove_tag_btn" variant="outlined" color="info"
                                 onClick={() => {
-                                removeTag(mt.tag?.id)
-                                history.push(`/markers/${marker.id}`)
+                                const tag = {tag: mt.tag.id}
+                                removeTag(markerId, tag)
+                                .then(setToggle(!toggle))
                                 }}>Clear Tags</Button></>
 
                             
@@ -131,7 +136,7 @@ export const CurrentMarkerDetails = () => {
                                         tag: parseInt(t.id)
                                     }
                                     updateTag(parseInt(markerId), updateMarkerTag)
-                                        .then(() => history.push(`/markers/${markerId}`))
+                                    .then(setTagToggle(!tagToggle))
                                 }}
                                 />
                                 <label htmlFor={`custom-checkbox-${index}`}>{t.label}</label>
