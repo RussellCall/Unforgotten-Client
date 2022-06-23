@@ -10,18 +10,20 @@ export const ImageForm = () => {
     const [image, setMarker] = useState([])
 
 
-    const [currentImage, setCurrentImage] = useState({
+    const [currentImage, setCurrentImage] = useState({ //currentImage created as state variable to store props below.
         image: "",
         marker_id: 0,
         user_id: 0
-    })
+    }) // setCurrentImage takes image id as a parameter uses image id to find image in the images array.
+            // sets currentImage to the image object.
+            // currentImage is used to set the value of the input field.
 
     useEffect(() => {
         getMarkers()
         .then((imgFromAPI) => {
             setMarker(imgFromAPI);
             })
-    }, []);
+    }, []); // empty array only runs once on page load.
 
 
     const changeImgState = (evt) => {

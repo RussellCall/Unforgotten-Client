@@ -44,5 +44,4 @@ export const deleteComment = (commentId) => {
             "Authorization": `Token ${localStorage.getItem("auth_token")}`
         },
     })
-    .then(window.location.reload())
   };

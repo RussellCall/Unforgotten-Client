@@ -6,15 +6,15 @@ export const CommentList = (props) => {
     const [ comments, setComment ] = useState([])
     const history = useHistory()
 
-    const loadComment = () => {
-        getComments()
+    const loadComment = () => { 
+        getComments() 
             .then(
-                (data) => {setComment(data)}
+                (data) => {setComment(data)} 
                 )}
 
-    useEffect(() => {
-        loadComment()
-    }, [])
+    useEffect(() => { 
+        loadComment() 
+    }, []) // empty array means that this will only run once on page load.
 
     return (
         <><article className="comments">

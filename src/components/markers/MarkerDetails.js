@@ -5,13 +5,13 @@ import { getMarkers, getCurrentMarker } from "./MarkerManager.js"
 
 
 export const MarkerDetails = () => {
-    const [ markers, setDetails ] = useState([])
-    const [comments, setComments] = useState([])
-    const {markerId} = useParams()
+    const [ markers, setDetails ] = useState([]) // markers-array of marker objects, setDetails-sets markers state.
+    const [comments, setComments] = useState([]) // comments-array of comment objects, setComments-sets comments state.
+    const {markerId} = useParams() // markerId-id of marker being viewed.
     
 
-    const markerState = () => {
-        getMarkers()
+    const markerState = () => {  // calls getMarkers passing markerId as parameter.
+        getMarkers() 
             .then(
                 (data) => {
                     setDetails(data)
@@ -19,33 +19,33 @@ export const MarkerDetails = () => {
             )
     }
 
-    const currentMarkerState = () => {
+    const currentMarkerState = () => { // calls getCurrentMarker passing markerId as parameter.
         getCurrentMarker(parseInt(markerId))
             .then(
                 (data) => {
-                    setDetails(data)
+                    setDetails(data) // sets marker state to data returned from API.
                 }
             )
-    }
+    }   
 
-    useEffect(() => {
+    useEffect(() => { //
         markerState()
-    }, [])
+    }, []) // runs markerState when markerId state changes.
 
 
     useEffect(() => {
         currentMarkerState()
-    }, [])
+    }, []) // runs currentMarkerState when markerId state changes.
 
     useEffect(
         () => {
-        getComments().then((comment)=> setComments(comment))
-    }, [])
+        getComments().then((comment)=> setComments(comment)) // calls getComments and sets comments state to data returned from API.
+    }, [])  // runs getComments when markerId state changes.
 
     return (
         <article className="details">
-            {markers.map((m) => {
-                return <section key={`detail--${m.id}`} className="detail">
+            {markers.map((m) => { 
+                return <section key={`detail--${m.id}`} className="detail"> 
                         
                         {m.tags.map((mt) => {
                             return <div className="marker_tag">Tags: {mt.label}</div>
