@@ -16,9 +16,9 @@ export const ApplicationViews = () => {
         <Route path="/markers/:markerId(\d+)">
                 <CurrentMarkerDetails />
         </Route>
-        <Route path="/comments">
+        {/* <Route path="/comments">
             <CommentList />
-        </Route>
+        </Route> */}
         <Route path="/images">
             <ImageList />
         </Route>

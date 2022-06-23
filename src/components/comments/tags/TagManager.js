@@ -17,12 +17,13 @@ export const getCurrentMarker = (id) => {
 }
 
 
-export const removeTag = (markerId) => {
+export const removeTag = (markerId, tag) => {
     return fetch(`http://localhost:8000/markers/${markerId}/remove_tag`, {
         method: "DELETE",
         headers: {
-            "Authorization": `Token ${localStorage.getItem("auth_token")}`
+            "Authorization": `Token ${localStorage.getItem("auth_token")}`,
+            "Content-Type": "application/json"
         },
+        body: JSON.stringify(tag)
     })
-    .then(getTags)
   };

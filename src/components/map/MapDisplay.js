@@ -20,14 +20,14 @@ import { Button } from '@mui/material'
 const TOKEN = 'pk.eyJ1IjoicnVzc2NhbGwiLCJhIjoiY2w0OHVpN2Z0MHczczNlbnNodHdxbGZ3NCJ9.FPCMQsW7K_C89mfzaxJH3Q'; // Set your mapbox token here
 
 export const MapDisplay = () => {
-    const [markerLoc, setMarkers] = useState([])
-    const [popupInfo, setPopupInfo] = useState(null);
+    const [markerLoc, setMarkers] = useState([])  // markerLoc is the marker objects array
+    const [popupInfo, setPopupInfo] = useState(null);  // popupInfo is the marker object with all the info
     const history = useHistory();
 
 
-    useEffect(
+    useEffect( //
         () => {
-        getMarkers().then(data => setMarkers(data))
+        getMarkers().then(data => setMarkers(data)) // calls getMarkers sets markerLoc state to the API data.
     }, [])
 
     const pins = useMemo(

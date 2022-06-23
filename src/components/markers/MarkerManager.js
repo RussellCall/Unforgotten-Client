@@ -17,14 +17,14 @@ export const getCurrentMarker = (id) => {
     .then(res => res.json())
 }
 
-export const updateTag = (marker, tag) => {
+export const updateTag = (marker, tag) => { 
     return fetch(`http://localhost:8000/markers/${marker}/add_tag`, {
         method: "PUT",
         headers: {
         "Authorization": `Token ${localStorage.getItem("auth_token")}`,
         "Content-Type": "application/json"
     },
-        body: JSON.stringify(tag)
+        body: JSON.stringify(tag) 
     })
   };
 
