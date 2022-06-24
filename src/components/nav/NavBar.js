@@ -6,10 +6,10 @@ export const NavBar = () => {
   const history = useHistory()
   return (
     <nav>
-      <Link to="/">Home</Link>
+      <Link className="navbar__link_home" to="/">Home</Link>
       {
         localStorage.getItem("auth_token") !== null ?
-          <button onClick={() => {
+          <button className="navbar__link_logout" onClick={() => {
             localStorage.removeItem("auth_token")
             history.push({ pathname: "/" })
           }}>

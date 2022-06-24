@@ -1,4 +1,5 @@
 import * as React from 'react';
+import "./Map.css"
 import {useState, useEffect, useMemo} from 'react';
 import Map, {
   Marker,
@@ -96,6 +97,8 @@ export const MapDisplay = () => {
       </Map>
 
       <MapControlsContainer />
+
+      
     </div>
   );
 }
