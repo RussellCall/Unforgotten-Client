@@ -18,6 +18,7 @@ import { withStyles } from "@material-ui/styles";
 import MapControlsContainer from "./MapControlsContainer";
 import { Button } from '@mui/material'
 
+
 const TOKEN = 'pk.eyJ1IjoicnVzc2NhbGwiLCJhIjoiY2w0OHVpN2Z0MHczczNlbnNodHdxbGZ3NCJ9.FPCMQsW7K_C89mfzaxJH3Q'; // Set your mapbox token here
 
 export const MapDisplay = () => {
@@ -65,10 +66,10 @@ export const MapDisplay = () => {
             mapStyle='mapbox://styles/mapbox/light-v9'
             mapboxAccessToken={TOKEN}
         >
-        <GeolocateControl position="top-left" />
-        <FullscreenControl position="top-left" />
-        <NavigationControl position="top-left" />
-        <ScaleControl />
+        <GeolocateControl position="bottom-left" />
+        <FullscreenControl position="bottom-left" />
+        <NavigationControl position="bottom-left" />
+        <ScaleControl position="bottom-right" />
 
         {pins}
 

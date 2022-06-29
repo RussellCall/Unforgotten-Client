@@ -8,7 +8,11 @@ import { deleteImage, getMarkerImage } from "../images/imageManger.js"
 import { Button, IconButton, Checkbox } from '@mui/material'
 import { Delete } from "@mui/icons-material"
 import Stack from '@mui/material/Stack';
-import { Box } from '@mui/material';
+import DialogActions from "@material-ui/core/DialogActions";
+import Dialog from "@material-ui/core/Dialog";
+import CloseIcon from '@material-ui/icons/Close';
+import Grid from "@material-ui/core/Grid";
+import { DialogTitle, Typography } from "@material-ui/core"
 
 
 export const CurrentMarkerDetails = () => {
@@ -73,16 +77,26 @@ export const CurrentMarkerDetails = () => {
     }, [markerId])
 
 
+
     return (
+        <Dialog open={true} maxWidth="lg">
+                <DialogTitle>
+                <Grid container justify="space-between" alignItems="center">
+                    <Typography variant="div">{marker.marker_name}</Typography>
+                    <IconButton onClick={() => 
+                            history.push(`/`)}>
+                    <CloseIcon />
+                    </IconButton>
+                </Grid>
+                </DialogTitle>
         <div className="details">
                 <section key={`detail--${marker.id}`} className="detail">
 
                         <div className="marker_details">
                             <div className="marker_detail_year">Marker Erected On: {marker.year_erected}</div>
-                            <div className="marker_name">{marker.marker_name}</div>
+                            {/* <div className="marker_name">{marker.marker_name}</div> */}
                             <div className="marker_text">Marker Text: {marker.marker_text}</div>
                             <div className="marker_location">Marker Location: {marker.location}</div>
-
                                 <Stack direction="row" spacing={2}>
                                 <Button className="comment_button" variant="contained" color="success"
                                 onClick={() => { //
@@ -163,5 +177,6 @@ export const CurrentMarkerDetails = () => {
                         </div>
                         </div>
                     </section>
-        </div>)
+        </div>
+        </Dialog>)
 }

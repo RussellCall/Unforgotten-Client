@@ -4,6 +4,11 @@ import { useHistory } from 'react-router-dom'
 import { getMarkers } from "../markers/MarkerManager"
 import { createComment } from "./CommentsManager"
 import { getMarkerComment } from "./CommentsManager"
+import { IconButton } from '@mui/material'
+import Dialog from "@material-ui/core/Dialog";
+import CloseIcon from '@material-ui/icons/Close';
+import Grid from "@material-ui/core/Grid";
+import { DialogTitle, Typography } from "@material-ui/core"
 
 
 export const CommentForm = () => {
@@ -43,15 +48,27 @@ export const CommentForm = () => {
         const NewComment = {...comment}  // using the spread operator to copy the comment object
         NewComment[event.target.name] = event.target.value // sets comment object to value of input field.
         setCurrentComment(NewComment) // sets currentComment to new comment object.
-        
-    }
+        }
+
+      
     return (
+        <Dialog open={true}>
+                <DialogTitle>
+                <Grid container justify="space-between" alignItems="center">
+                    <Typography variant="div">Comment:</Typography>
+                    <IconButton onClick={() => 
+                            history.push(`/markers/${markerId}`)}>
+                    <CloseIcon />
+                    </IconButton>
+                </Grid>
+                </DialogTitle>
         <form className="commentForm">
             <h2 className="commentForm__title">New Comment</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="text">Comment: </label>
                     <input type="text" name="text" require autoFocus className="form-control"
+                        style={{ width: "500px"}}
                         value={currentComment.text}
                         onChange={changeCommentState}
                     />
@@ -75,5 +92,6 @@ export const CommentForm = () => {
                 }}
                 className="btn btn-primary">Submit</button>
         </form>
+        </Dialog>
     )
 }

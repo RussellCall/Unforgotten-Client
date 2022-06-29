@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom"
 import { useHistory } from 'react-router-dom'
 import { getMarkers } from "../markers/MarkerManager.js"
 import { createImage } from "./imageManger.js"
+import Dialog from "@material-ui/core/Dialog";
+import CloseIcon from '@material-ui/icons/Close';
+import Grid from "@material-ui/core/Grid";
+import { DialogTitle, Typography } from "@material-ui/core"
+import { IconButton } from '@mui/material'
 
 export const ImageForm = () => {
     const history = useHistory()
@@ -34,6 +39,16 @@ export const ImageForm = () => {
         
     }
     return (
+        <Dialog open={true}>
+        <DialogTitle>
+        <Grid container justify="space-between" alignItems="center">
+            <Typography variant="div">Upload Your Images</Typography>
+            <IconButton onClick={() => 
+                    history.push(`/markers/${markerId}`)}>
+            <CloseIcon />
+            </IconButton>
+        </Grid>
+        </DialogTitle>
         <form className="imageForm">
             <h2 className="imageForm__title">Image URL Input</h2>
             <fieldset>
@@ -41,6 +56,7 @@ export const ImageForm = () => {
                     <label htmlFor="text">Image URL: </label>
                     <input type="text" name="text" require autoFocus className="form-control"
                         value={currentImage.text}
+                        style={{ width: "500px" }}
                         onChange={changeImgState}
                     />
                 </div>
@@ -63,5 +79,6 @@ export const ImageForm = () => {
                 }}
                 className="btn btn-primary">Submit</button>
         </form>
+        </Dialog>
     )
 }
