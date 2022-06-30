@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import "./Details.css"
 import { Link, useHistory, useParams } from "react-router-dom"
 import { getTags, removeTag } from "../comments/tags/TagManager.js"
 import { getCurrentMarker, updateTag, userMarkerTag } from "./MarkerManager.js"
@@ -7,6 +8,11 @@ import { deleteImage, getMarkerImage } from "../images/imageManger.js"
 import { Button, IconButton, Checkbox } from '@mui/material'
 import { Delete } from "@mui/icons-material"
 import Stack from '@mui/material/Stack';
+import DialogActions from "@material-ui/core/DialogActions";
+import Dialog from "@material-ui/core/Dialog";
+import CloseIcon from '@material-ui/icons/Close';
+import Grid from "@material-ui/core/Grid";
+import { DialogTitle, Typography } from "@material-ui/core"
 
 
 export const CurrentMarkerDetails = () => {
@@ -71,38 +77,91 @@ export const CurrentMarkerDetails = () => {
     }, [markerId])
 
 
+
     return (
-        <article className="details">
+        <Dialog open={true} maxWidth="lg">
+                <DialogTitle>
+                <Grid container justify="space-between" alignItems="center">
+                    <Typography variant="div">{marker.marker_name}</Typography>
+                    <IconButton onClick={() => 
+                            history.push(`/`)}>
+                    <CloseIcon />
+                    </IconButton>
+                </Grid>
+                </DialogTitle>
+        <div className="details">
                 <section key={`detail--${marker.id}`} className="detail">
-                        <Stack direction="row" spacing={2}>
-                        <Button className="comment_button" variant="outlined" color="success"
-                        onClick={() => { //
-                            history.push({ pathname: `/markers/${marker.id}/comment`}) // pushes to comment form.
-                        }}>Make Your Mark</Button>
-                        <Button className="comment_button" variant="outlined" color="secondary"
-                        onClick={() => {
-                            history.push({ pathname: `/markers/${marker.id}/image`})  // pushes to image form.
-                        }}>Upload Images</Button>
-                        </Stack>
+
                         <div className="marker_details">
                             <div className="marker_detail_year">Marker Erected On: {marker.year_erected}</div>
-                            <div className="marker_name">{marker.marker_name}</div>
+                            {/* <div className="marker_name">{marker.marker_name}</div> */}
                             <div className="marker_text">Marker Text: {marker.marker_text}</div>
                             <div className="marker_location">Marker Location: {marker.location}</div>
+                                <Stack direction="row" spacing={2}>
+                                <Button className="comment_button" variant="contained" color="success"
+                                onClick={() => { //
+                                    history.push({ pathname: `/markers/${marker.id}/comment`}) // pushes to comment form.
+                                }}>Make Your Mark</Button>
+                                <Button className="comment_button" variant="contained" color="secondary"
+                                onClick={() => {
+                                    history.push({ pathname: `/markers/${marker.id}/image`})  // pushes to image form.
+                                }}>Upload Images</Button>
+                                </Stack>
+
+                                {tags.map((t, index) => {
+                            return <div className="tags">
+                            <li key={index}>
+                            <div className="tag_options">
+                                <input
+                                type="checkbox"
+                                id={`custom-checkbox-${index}`}
+                                label={t.label}
+                                value={t.id}
+                                onChange={event => {
+                                    event.preventDefault()
+                                    const updateMarkerTag = {
+                                        tag: parseInt(t.id)
+                                    }
+                                    updateTag(parseInt(markerId), updateMarkerTag)
+                                    .then(setTagToggle(!tagToggle))
+                                }}
+                                />
+                                <label htmlFor={`custom-checkbox-${index}`}>{t.label}</label>
+                            </div>
+                        </li>
+                            </div>
+
+                        })}
                         </div>
-                            <div className="comments_body">
+
+                        {markerTags.map((mt) => {
+                            return <><div className="marker_tag">Tags: {mt.tag?.label}</div>
+                            <Button className="remove_tag_btn" variant="outlined" color="error" size="small"
+                                onClick={() => {
+                                const tag = {tag: mt.tag.id}
+                                removeTag(markerId, tag)
+                                .then(setToggle(!toggle))
+                                }}>Clear Tags</Button></>
+
+                            
+                        })}
+
+                    </section>
+                    <section>
+                    <div className="comments_body">
+                            <div className="header">My Experience</div>
                             <div className="commentBody">{comments.map(
                                     (comment) => {
-                                        return <><div>Comments:</div>
-                                                    <IconButton className="comment_delete" aria-label="delete" size="small" color="primary">       
-                                                    <Delete onClick={() => {
+                                        return <>  <div className="comment_text">{comment.text}</div>
+                                                    <Button variant="outlined" size="small" color="error"       
+                                                    onClick={() => {
                                                     deleteComment(comment.id) 
                                                     .then(setCommentToggle(!commentToggle))
-                                                    }} />{comment.text}</IconButton></>
+                                                    }}>delete</Button></>
                                     }
                                 )}</div>
 
-                        <div className="images"> Pictures:
+                        <div className="images">
                             {images.map(image => {
                                             return <div key={`image--${image.id}`} className="image">
                                                 <img className="image_url" src={image.image} alt={image.image}/>
@@ -117,43 +176,7 @@ export const CurrentMarkerDetails = () => {
                                         })}
                         </div>
                         </div>
-                        {markerTags.map((mt) => {
-                            return <><div className="marker_tag">Tags: {mt.tag?.label}</div>
-                            <Button className="remove_tag_btn" variant="outlined" color="info"
-                                onClick={() => {
-                                const tag = {tag: mt.tag.id}
-                                removeTag(markerId, tag)
-                                .then(setToggle(!toggle))
-                                }}>Clear Tags</Button></>
-
-                            
-                        })}
-                        {tags.map((t, index) => {
-                            return <div className="marker_tag">
-                            <li key={index}>
-                            <div className="tag_options"> Tag Option:
-                                <input
-                                type="checkbox"
-                                id={`custom-checkbox-${index}`}
-                                label={t.label}
-                                value={t.id}
-                                onChange={event => {
-                                    event.preventDefault()
-
-                                    const updateMarkerTag = {
-                                        tag: parseInt(t.id)
-                                    }
-                                    updateTag(parseInt(markerId), updateMarkerTag)
-                                    .then(setTagToggle(!tagToggle))
-                                }}
-                                />
-                                <label htmlFor={`custom-checkbox-${index}`}>{t.label}</label>
-                            </div>
-                        </li>
-                            </div>
-
-                        })}
-
                     </section>
-        </article>)
+        </div>
+        </Dialog>)
 }
