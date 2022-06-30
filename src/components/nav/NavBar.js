@@ -30,13 +30,13 @@ const useStyles = makeStyles((theme) => ({
 export const NavBar = () => {
   const classes = useStyles();
   const [example] = useState("customColor");
-  const isCustomColor = example === "customColor";
+  const isCustomColor = "customColor";
   const isCustomHeight = example === "customHeight";
   const history = useHistory()
 
   return (
     <><AppBar
-        color="customColor"
+        color="inherit"
         className={`${isCustomColor && classes.customColor} ${
           isCustomHeight && classes.customHeight
         }`}>
@@ -50,7 +50,7 @@ export const NavBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h4" className={classes.title}>
-            <div>Unforgotten Nashville</div>
+            <div>Remember Nashville</div>
           </Typography>
           <IconButton>
             <Link className="navbar__link_home" to="/">Home</Link>

@@ -13,10 +13,10 @@ import {useHistory} from 'react-router-dom';
 import { getMarkers } from '../markers/MarkerManager';
 import Pin from './pin';
 import "mapbox-gl/dist/mapbox-gl.css";
-import { _CameraLight as CameraLight, LightingEffect } from "@deck.gl/core";
-import { withStyles } from "@material-ui/styles";
 import MapControlsContainer from "./MapControlsContainer";
-import { Button } from '@mui/material'
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+
 
 
 const TOKEN = 'pk.eyJ1IjoicnVzc2NhbGwiLCJhIjoiY2w0OHVpN2Z0MHczczNlbnNodHdxbGZ3NCJ9.FPCMQsW7K_C89mfzaxJH3Q'; // Set your mapbox token here
@@ -47,59 +47,60 @@ export const MapDisplay = () => {
             setPopupInfo(marker);
             }}
         >
-            <Pin />
+            <Pin 
+                color="blue"
+            />
         </Marker>
         )),
     [markerLoc]
     );
 
     return (
-    <div className="map-container">
-        <Map
-            initialViewState={{
-                latitude: 36.1627,
-                longitude: -86.7816,
-                zoom: 11.5,
-                bearing: 0,
-                pitch: 0
-            }}
-            mapStyle='mapbox://styles/mapbox/light-v9'
-            mapboxAccessToken={TOKEN}
-        >
-        <GeolocateControl position="bottom-left" />
-        <FullscreenControl position="bottom-left" />
-        <NavigationControl position="bottom-left" />
-        <ScaleControl position="bottom-right" />
-
-        {pins}
-
-        {popupInfo && (
-            <Popup
-                anchor="top"
-                longitude={Number(popupInfo.longitude)}
-                latitude={Number(popupInfo.latitude)}
-                onClose={() => setPopupInfo(null)}
+        <div className="map-container">
+            <Map
+                initialViewState={{
+                    latitude: 36.1627,
+                    longitude: -86.7816,
+                    zoom: 11.5,
+                    bearing: 0,
+                    pitch: 0
+                }}
+                mapStyle='mapbox://styles/mapbox/light-v9'
+                mapboxAccessToken={TOKEN}
             >
-            <div>
-                {popupInfo.marker_name}:{' '}
+                <GeolocateControl position="bottom-left" />
+                <FullscreenControl position="bottom-left" />
+                <NavigationControl position="bottom-left" />
+                <ScaleControl position="bottom-right" />
 
-                    <Button
-                        variant="text"
-                        key={`marker-${popupInfo.id}`}
-                        onClick={() => 
-                      history.push(`/markers/${popupInfo.id}`)}
+                {pins}
+
+                {popupInfo && (
+                    <Popup
+                        anchor="top"
+                        longitude={Number(popupInfo.longitude)}
+                        latitude={Number(popupInfo.latitude)}
+                        onClose={() => setPopupInfo(null)}
                     >
-                      Marker Details
-                  </Button>
-            </div>
-            <img width="100%" src={popupInfo.image} />
-          </Popup>
-        )}
-      </Map>
-
-      <MapControlsContainer />
-
-      
-    </div>
-  );
+                    <div>
+                        {popupInfo.marker_name}:{' '}
+                        <IconButton onClick={() => 
+                        
+                                history.push(`/markers/${popupInfo.id}`)}
+                                variant="text"
+                                size="small"
+                                key={`marker-${popupInfo.id}`}>
+                            <Button variant="contained" size="small" >
+                                Marker Details
+                            </Button>
+                        </IconButton>
+                    </div>
+                    {/* <img width="100%" src={popupInfo.image} /> */}
+                </Popup>
+                )}
+                
+            </Map>
+            <MapControlsContainer />            
+        </div>
+        );
 }
