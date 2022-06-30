@@ -35,7 +35,11 @@ React, Javascript, CSS, Material UI, Mapbox GL JS in React.
 ### Installed Dependencies
 
 npm install --save react-map-gl mapbox-gl
+
 npm install @material-ui/core
+
 npm install @mui/material @mui/styled-engine-sc styled-components
+
 npm install @mui/icons-material
+
 npm install @mui/material @emotion/react @emotion/styled
